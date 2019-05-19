@@ -20,18 +20,17 @@ class ContentExtractor(private val parsers: List<MimeParserInfo>) {
     }
 }
 
-class MimeParserInfo(val contentType: String, val parser: MimeParser)
-
-val contentExtractor = ContentExtractor(
-    listOf(
-        MimeParserInfo("text/plain", parser = mapContent { it }),
-        MimeParserInfo("text/html", parser = mapContent { parseHtml(it) }),
-        MimeParserInfo("multipart/alternative", parser = MultipartAlternativeParser()),
-        MimeParserInfo("multipart/*", parser = MultipartParser()),
-        MimeParserInfo("message/rfc822", parser = MessageParser())
-    )
+private val parsers: List<MimeParserInfo> = listOf(
+    MimeParserInfo("text/plain", parser = mapContent { it }),
+    MimeParserInfo("text/html", parser = mapContent { parseHtml(it) }),
+    MimeParserInfo("multipart/alternative", parser = MultipartAlternativeParser()),
+    MimeParserInfo("multipart/*", parser = MultipartParser()),
+    MimeParserInfo("message/rfc822", parser = MessageParser())
 )
 
+class MimeParserInfo(val contentType: String, val parser: MimeParser)
+
+
 fun extractText(mimeMessage: MimeMessage): String {
-    return contentExtractor.extract(mimeMessage, true)?.text ?: ""
+    return ContentExtractor(parsers).extract(mimeMessage, true)?.text ?: ""
 }

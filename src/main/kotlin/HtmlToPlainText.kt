@@ -9,7 +9,6 @@ class HtmlToPlainText {
     fun getPlainText(element: Element): String {
         val formatter = FormattingVisitor()
         NodeTraversor.traverse(formatter, element)
-
         return formatter.toString()
     }
 

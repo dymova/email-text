@@ -3,7 +3,7 @@ import javax.mail.Session
 import javax.mail.internet.MimeMessage
 import kotlin.test.assertEquals
 
-class MimeParserTest {
+class MimeParsersTest {
     @Test
     fun extractFromTextPlainMessage() {
         testExtractText("This is a plain text/plain message.  Nothing fancy here...", "TextPlain.txt")
@@ -33,7 +33,6 @@ class MimeParserTest {
         )
     }
 
-    // TODO станные переводы строк в конце
     @Test
     fun extractFromTextHtmlWithAttachmentMessage() {
         testExtractText(
@@ -54,7 +53,7 @@ class MimeParserTest {
 
     private fun testExtractText(expected: String, fileName: String) {
         val session = Session.getDefaultInstance(System.getProperties())
-        val mimeMessage = MimeMessage(session, MimeParserTest::class.java.getResourceAsStream(fileName))
+        val mimeMessage = MimeMessage(session, MimeParsersTest::class.java.getResourceAsStream(fileName))
         val actual = extractText(mimeMessage)
         assertEquals(expected, actual)
     }

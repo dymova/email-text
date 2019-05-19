@@ -5,7 +5,6 @@ import javax.mail.Part
 
 interface MimeParser {
     fun parse(content: Any, matcher: ContentExtractor): Content?
-
 }
 
 abstract class StringMimeParser : MimeParser {
@@ -50,7 +49,6 @@ class MultipartParser : AbstractMultipartParser() {
 
 class MultipartAlternativeParser : AbstractMultipartParser() {
     override fun parse(content: Multipart, matcher: ContentExtractor): Content? {
-        // at first we try to extract known alternative, only after
         var nonExactContent : Content? = null
         content.iterParts { bodyPart ->
             val partContent = matcher.extract(bodyPart, true) ?: return@iterParts
