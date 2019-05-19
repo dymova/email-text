@@ -4,17 +4,17 @@ import javax.mail.Multipart
 import javax.mail.Part
 
 interface MimeParser {
-    fun parse(content: Any, matcher: ContentExtractor): String?
+    fun parse(content: Any, matcher: ContentExtractor): Content?
 
 }
 
 abstract class StringMimeParser : MimeParser {
-    final override fun parse(content: Any, matcher: ContentExtractor): String = parse(content as String, matcher)
-    abstract fun parse(content: String, matcher: ContentExtractor): String
+    final override fun parse(content: Any, matcher: ContentExtractor): Content = parse(content as String, matcher)
+    abstract fun parse(content: String, matcher: ContentExtractor): Content
 }
 
-fun mapContent(stringConverter: (String) -> String): StringMimeParser = object : StringMimeParser() {
-    override fun parse(content: String, matcher: ContentExtractor): String = stringConverter(content)
+fun mapContent(converter: (String) -> String): StringMimeParser = object : StringMimeParser() {
+    override fun parse(content: String, matcher: ContentExtractor): Content = Content(converter(content))
 }
 
 fun parseHtml(html: String): String {
@@ -23,44 +23,41 @@ fun parseHtml(html: String): String {
 }
 
 class MessageParser : MimeParser {
-
-    override fun parse(content: Any, matcher: ContentExtractor): String? {
+    override fun parse(content: Any, matcher: ContentExtractor): Content? {
         val part = content as Part
         return matcher.extract(part, true)
     }
 }
 
 abstract class AbstractMultipartParser : MimeParser {
-    final override fun parse(content: Any, matcher: ContentExtractor): String? = parse(content as Multipart, matcher)
-    abstract fun parse(content: Multipart, matcher: ContentExtractor): String?
+    final override fun parse(content: Any, matcher: ContentExtractor): Content? = parse(content as Multipart, matcher)
+    abstract fun parse(content: Multipart, matcher: ContentExtractor): Content?
 }
 
 
 class MultipartParser : AbstractMultipartParser() {
-    override fun parse(content: Multipart, matcher: ContentExtractor): String {
-        return buildString {
+    override fun parse(content: Multipart, matcher: ContentExtractor): Content {
+        return Content(buildString {
             content.iterParts { bodyPart ->
-                val text = matcher.extract(bodyPart, true)
+                val text = matcher.extract(bodyPart, true)?.text
                 if (text != null) {
                     appendln(text)
                 }
             }
-        }
+        })
     }
 }
 
 class MultipartAlternativeParser : AbstractMultipartParser() {
-    override fun parse(content: Multipart, matcher: ContentExtractor): String? {
+    override fun parse(content: Multipart, matcher: ContentExtractor): Content? {
         // at first we try to extract known alternative, only after
-        return parse(content, matcher, false)
-            ?: parse(content, matcher, true)
-    }
-
-    private fun parse(multipart: Multipart, matcher: ContentExtractor, handleUnknownType: Boolean) : String? {
-        multipart.iterParts { bodyPart ->
-            return matcher.extract(bodyPart, handleUnknownType) ?: return@iterParts
+        var nonExactContent : Content? = null
+        content.iterParts { bodyPart ->
+            val partContent = matcher.extract(bodyPart, true) ?: return@iterParts
+            if (partContent.isExact) return partContent
+            nonExactContent = partContent
         }
-        return null
+        return nonExactContent
     }
 }
 
