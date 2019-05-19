@@ -1,0 +1,40 @@
+Subject: HTML and...  HTML?
+From: Ryan Finnie <rfinnie@domain.dom>
+To: bob@domain.dom
+Content-Type: multipart/mixed; boundary="=-zxh/IezwzZITiphpcbJZ"
+Message-Id: <1066973957.4263.59.camel@localhost>
+Mime-Version: 1.0
+Date: 23 Oct 2003 22:39:17 -0700
+
+
+--=-zxh/IezwzZITiphpcbJZ
+Content-Type: text/html; CHARSET=utf-8
+Content-Transfer-Encoding: 8bit
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 TRANSITIONAL//EN">
+<HTML>
+<HEAD>
+  <META HTTP-EQUIV="Content-Type" CONTENT="text/html; CHARSET=UTF-8">
+  <META NAME="GENERATOR" CONTENT="GtkHTML/1.1.10">
+</HEAD>
+<BODY>
+<BR>
+What do we have here...  This message is an HTML message.  Also attached
+is an HTML FILE.  Both of these are in a multipart/mixed part.<BR>
+<BR>
+</BODY>
+</HTML>
+
+--=-zxh/IezwzZITiphpcbJZ
+Content-Disposition: attachment; filename=htmlfile.html
+Content-Type: text/html; NAME=htmlfile.html; CHARSET=UTF-8
+Content-Transfer-Encoding: 8bit
+
+<html>
+<head><title>This is an Attachment</title></head>
+<body>
+<p>The title says it all...</p>
+</body>
+</html>
+
+--=-zxh/IezwzZITiphpcbJZ--

@@ -1,0 +1,13 @@
+Content-Type: text/html; CHARSET=utf-8
+Content-Transfer-Encoding: 8bit
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 TRANSITIONAL//EN">
+<HTML>
+<HEAD>
+  <META HTTP-EQUIV="Content-Type" CONTENT="text/html; CHARSET=UTF-8">
+  <META NAME="GENERATOR" CONTENT="GtkHTML/1.1.10">
+</HEAD>
+<BODY>
+<FONT COLOR="#f8cc00">This is the HTML part.</FONT>
+<BR>It should be displayed inline.</BODY>
+</HTML>

@@ -1,0 +1,14 @@
+Content-Disposition: inline
+Content-Description: I'll be whatever I wanna do. --Fry
+Content-Type: message/rfc822
+
+Subject: plain jane message
+From: Ryan Finnie <rfinnie@domain.dom>
+To: bob@domain.dom
+Message-Id: <1066973156.4264.42.camel@localhost>
+Mime-Version: 1.0
+Date: 23 Oct 2003 22:25:56 -0700
+Content-Type: text/plain; CHARSET=US-ASCII
+Content-Transfer-Encoding: 8bit
+
+This is a plain text/plain message.  Nothing fancy here...
